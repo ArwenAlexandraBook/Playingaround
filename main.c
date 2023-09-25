@@ -1,4 +1,4 @@
-#include <Arduino.h>
+
 #include <stdio.h>
 #include <string.h>
 #include "lcd.h"
@@ -25,10 +25,9 @@ ButtonEvent buttonEvents[60] // Sparar knapptryckningar
 void HandleButtonClick(char *txt)
 {
     delay(200);
-    strcat(currentText, txt)
-    {
-        lcd_set_cursor(0, 1);
-        lcd_puts(currentText);
+    strcat(currentText, txt);
+    lcd_set_cursor(0, 1);
+    lcd_puts(currentText);
 
         if (strlen(currentText) == 4)
         {
@@ -59,7 +58,7 @@ void HandleButtonClick(char *txt)
         lcd_enable_blinking(); // Aktiverar blink
         lcd_enable_cursor();   // Aktiverar cursor
 
-        lcd_set_cursor(0, 0)        // LCD-cursor rad 0
+        lcd_set_cursor(0, 0);        // LCD-cursor rad 0
             lcd_puts(questionText); // Frågan visas på lcd skärmen
     }
 
