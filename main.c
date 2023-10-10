@@ -35,8 +35,8 @@ wifi_set_opmode(STATION_MODE);
 
 struct station_config stationConf;
 memset(&statonConf, 0, sizeof(struct station_config));
-strcpy(stationConf.ssid, ssid);  // Ange det wifi man ska logga in på.
-strcpy(stationConf.password, password); //Ange lösenord
+strcpy(stationConf.ssid);  // Ange det wifi man ska logga in på.
+strcpy(stationConf.password); //Ange lösenord
 
 wifi_station_set_config(&stationConf);
 wifi_station_connect();
