@@ -45,7 +45,7 @@ wifi_station_connect();
 int timeout = 10000; // 10 sekunders väntan på om anslutningen till wifi lyckas
 while (wifi_station_get_connect_status()! = STATION_GOT_IP && timeout > 0)
 {
-    delay(1000); 
+    os_delay_us(1000); 
     timeout -=1000;
 }
 
@@ -64,7 +64,7 @@ else
 
 void HandleButtonClick(char *txt)
 {
-    delay(200); //Förfröjning millisekunder
+    os_delay_us(200); //Förfröjning millisekunder
     strncat(currentText, txt, sizeof(currentText) - strlen(currentText) - 1);
     lcd_set_cursor(0, 1);
     lcd_puts(currentText);
