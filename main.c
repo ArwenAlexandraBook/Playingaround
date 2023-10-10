@@ -30,13 +30,13 @@ struct ButtonEvent buttonEvents[60];
 int numEvents = 0;
 
 bool ConnectToWifi(const char *ssid, const char *password)
-
+{
 wifi_set_opmode(STATION_MODE);
 
 struct station_config stationConf;
 memset(&statonConf, 0, sizeof(struct station_config));
-strcpy(stationConf.ssid);  // Ange det wifi man ska logga in på.
-strcpy(stationConf.password); //Ange lösenord
+strcpy(stationConf.ssid,wifiSSID[0]);  // Ange det wifi man ska logga in på.
+strcpy(stationConf.password,wifiPassWords[0]); //Ange lösenord
 
 wifi_station_set_config(&stationConf);
 wifi_station_connect();
@@ -61,7 +61,7 @@ else
 
     return false;
 }
-
+}
 void HandleButtonClick(char *txt)
 {
     os_delay_us(200); //Förfröjning millisekunder
