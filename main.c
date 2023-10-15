@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <string.h>
 #include "lcd.h"
@@ -15,8 +16,8 @@ char questionText[20] = " ";
 
 // Specificerar SSID och lösenord för lokala wifinätverk
 
-const char *wifiSSID[] = {"SSID1"} //Det SSiDs man använder. 
-const char *wifiPassWords[] = {"Password1"}; //Lösenord till wifi
+const char *wifiSSID[] = {"SSID1"} //Det SSID man använder. 
+const char *wifiPassWord[] = {"Password1"}; //Lösenord till wifi
 const int numNetworks = sizeof(wifiSSIDs) /sizof(wifiSSIDs[0]);
 
 struct ButtonEvent
@@ -45,7 +46,7 @@ wifi_station_connect();
 int timeout = 10000; // 10 sekunders väntan på om anslutningen till wifi lyckas
 while (wifi_station_get_connect_status()! = STATION_GOT_IP && timeout > 0)
 {
-    os_delay_us(1000); 
+    _delay_us(1000); 
     timeout -=1000;
 }
 
@@ -64,7 +65,7 @@ else
 }
 void HandleButtonClick(char *txt)
 {
-    os_delay_us(200); //Förfröjning millisekunder
+    _delay_us(200); //Förfröjning millisekunder
     strncat(currentText, txt, sizeof(currentText) - strlen(currentText) - 1);
     lcd_set_cursor(0, 1);
     lcd_puts(currentText);
@@ -78,7 +79,7 @@ void HandleButtonClick(char *txt)
         else
         {
             lcd_printf("Incorrct code!"); // Felmeddelande
-            delay(300); //Fördröjning i millisekunder.
+            _delay_us(300); //Fördröjning i millisekunder.
             lcd_set_cursor(0, 1); // LCD-cursor rad 1
             lcd_puts("  "); //Rensar raden
             lcd_set_cursor(0, 1); //Återgår till rad 1
@@ -102,7 +103,7 @@ void setup()
     lcd_puts(questionText); // Frågan visas på lcd skärmen
 }
 
-for (int i =0; i < numNetowrks;i++)  //Söker efter tillgänliga nätverk.
+for (int i = 0; i < numNetowrks;i++)  //Söker efter tillgänliga nätverk.
 {
     if (ConnectToWifi(wifiSSIDs[i], wifiPassWords[i]))
     {
@@ -110,6 +111,7 @@ for (int i =0; i < numNetowrks;i++)  //Söker efter tillgänliga nätverk.
         break;
     }
 }
+
 
 
 void loop()
