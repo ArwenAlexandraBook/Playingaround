@@ -1,4 +1,7 @@
 
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <util/delay.h>
 #include <stdio.h>
 #include <string.h>
 #include "lcd.h"
@@ -18,7 +21,7 @@ char questionText[20] = " ";
 
 const char *wifiSSID[] = {"SSID1"} //Det SSID man använder. 
 const char *wifiPassWord[] = {"Password1"}; //Lösenord till wifi
-const int numNetworks = sizeof(wifiSSIDs) /sizof(wifiSSIDs[0]);
+const int numNetworks = sizeof(wifiSSID) /sizof(wifiSSID[0]);
 
 struct ButtonEvent
 {
@@ -37,7 +40,7 @@ wifi_set_opmode(STATION_MODE);
 struct station_config stationConf;
 memset(&statonConf, 0, sizeof(struct station_config));
 strcpy(stationConf.ssid,wifiSSID[0]);  // Ange det wifi man ska logga in på.
-strcpy(stationConf.password,wifiPassWords[0]); //Ange lösenord
+strcpy(stationConf.password,wifiPassWord[0]); //Ange lösenord
 
 wifi_station_set_config(&stationConf);
 wifi_station_connect();
@@ -50,16 +53,12 @@ while (wifi_station_get_connect_status()! = STATION_GOT_IP && timeout > 0)
     timeout -=1000;
 }
 
-if (wifi_station_get_conenct_status() === STATION_GOT_IP)
+if (wifi_station_get_connect_status() === STATION_GOT_IP)
 {
-
  return true;
-
 }
-
 else 
 {
-
     return false;
 }
 }
@@ -88,6 +87,20 @@ void HandleButtonClick(char *txt)
     }
 }
 
+void ConnectToWiFiNetworks()
+{
+
+for (int i = 0; i < numNetworks;i++)  //Söker efter tillgänliga nätverk.
+{
+    if (ConnectToWifi(wifiSSIDs[i], wifiPassWords[i]))
+    {
+
+        break;
+    }
+}
+
+}
+
 void setup()
 {
     for (int i = 0; i < numButton; i++)
@@ -101,18 +114,9 @@ void setup()
 
     lcd_set_cursor(0, 0);   // LCD-cursor rad 0
     lcd_puts(questionText); // Frågan visas på lcd skärmen
+
+    ConnectToWifiNetworks();
 }
-
-for (int i = 0; i < numNetowrks;i++)  //Söker efter tillgänliga nätverk.
-{
-    if (ConnectToWifi(wifiSSIDs[i], wifiPassWords[i]))
-    {
-
-        break;
-    }
-}
-
-
 
 void loop()
 {
