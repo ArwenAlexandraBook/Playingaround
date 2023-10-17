@@ -2,7 +2,18 @@
 #define LCD_H
 
 #include <stdint.h>
+#include <avr/io.h>
 
+#define LCD_PORT PORTD
+#define LCD_DDR DDRD 
+
+#if (!defined LCD_DDR || !defined LCD_PORT)
+#warning "Var god definera LCD_DDR och LCD_PORT"
+#define LCD_DDR DDRB
+#define LCD_PORT PORTB
+#endif 
+
+#ifndef LCD_RS
 #define LCD_RS_PIN 2  // GPIO-pin till RS
 #define LCD_EN_PIN 3  // GPIO-pin till EN 
 #define LCD_D4_PIN 4  // GPIO-pin till D4
@@ -62,12 +73,12 @@ void lcd_enable_blinking(void);
 void lcd_disable_blinking(void);
 
 void lcd_enable_cursor(void);
-void lcd_lcd_disable_cursor(void);
+void lcd_disable_cursor(void);
 
 void lcd_scroll_left(void);
 void lcd_scroll_right(void);
 
-void lcd_lcd_enable_autoscroll(void);
+void lcd_enable_autoscroll(void);
 void lcd_disable_autoscroll(void);
 
 void lcd_create_char(uint8_t location, uint8_t *charmap); 
