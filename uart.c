@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <util/setbaud.h>
 
-#define BAUD 9600 // Baudrate hastigheten
+#define BAUD 9600 // Baudratehastigheten
 
 
 // Funktion som initierar uart
@@ -12,7 +12,7 @@ void uart_init(void)
     UBRR0L = UBBRRL_VALUE;
 
 #if USE_2X
-    UCSR0A = |= _BV(U2x0);
+    UCSR0A |= _BV(U2x0);
 #else
     UCSR0A &= ~(_BV(USX0));
 #endif
